@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Gavin</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://www.stepontech.com</licenseUrl>
+    <projectUrl>http://www.stepontech.com</projectUrl>
+    <iconUrl>http://www.stepontech.com</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>C# wrapper of arcsoft's face recognize</releaseNotes>
+    <copyright>Copyright © 2016-2017 Stepon Technology CO.,LTD</copyright>
+    <tags>face recognize ai</tags>
+  </metadata>
+</package>
