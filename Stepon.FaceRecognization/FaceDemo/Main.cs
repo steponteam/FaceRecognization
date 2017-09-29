@@ -121,8 +121,10 @@ namespace FaceDemo
                     image = (Bitmap) _image.Clone();
                 }
 
-                if (_shouldShot)
+                if (_shouldShot){
                     WriteFeature(image);
+                    _shouldShot = false;
+                }
 
                 Verify(image);
 

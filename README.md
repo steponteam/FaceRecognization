@@ -78,4 +78,4 @@ using (var proccesor = new FaceProcessor("appid",
 ```
 
 ## FaceDemo
-This is a complete example to show the use of this library. It use ffmepg(``NReco.VideoConverter``) to capture IP camera via RTSP. You can also use ``Emgu.CV``(or other library) to capture web camera.
+This is a complete example to show the using of this library. It use ffmepg(``NReco.VideoConverter``) to capture IP camera via RTSP. You can also use ``Emgu.CV``(or other library) to capture web camera.
