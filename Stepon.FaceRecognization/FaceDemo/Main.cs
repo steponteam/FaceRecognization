@@ -81,7 +81,7 @@ namespace FaceDemo
             var setting =
                 new ConvertSettings
                 {
-                    CustomOutputArgs = "-an -r 15 -pix_fmt bgr24 -updatefirst 1"
+                    CustomOutputArgs = "-an -r 15 -pix_fmt bgr24 -updatefirst 1" //根据业务需求-r参数可以调整，取决于摄像机的FPS
                 }; //-s 1920x1080 -q:v 2 -b:v 64k
 
             task = ffmpeg.ConvertLiveMedia("rtsp://user:password@192.168.1.64:554/h264/ch1/main/av_stream", null,
@@ -96,12 +96,12 @@ namespace FaceDemo
 
         private void DataReceived(object sender, EventArgs e)
         {
-            if (outputStream.Position == 6220800)
+            if (outputStream.Position == 6220800) //1920*1080*3,stride * width,取决于图片的大小和像素格式
                 lock (_imageLock)
                 {
                     var data = outputStream.ToArray();
 
-                    Marshal.Copy(data, 0, _pImage, data.Length);
+                    Marshal.Copy(data, 0, _pImage, data.Length);//直接替换在内存中的位图数据，以提升处理效率
 
                     outputStream.Seek(0, SeekOrigin.Begin);
                 }
