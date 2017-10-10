@@ -48,6 +48,13 @@ namespace FaceDemo
         private MemoryStream outputStream;
         private ConvertLiveMediaTask task;
 
+        //视频图形信息
+        private int width = 1920;
+        private int height = 1080;
+        private int pixelSize = 3;
+        private int stride;
+        private int bufferSize;
+
         public Main()
         {
             InitializeComponent();
@@ -72,8 +79,11 @@ namespace FaceDemo
                 }
             }
 
-            _pImage = Marshal.AllocHGlobal(1920 * 1080 * 3);
-            _image = new Bitmap(1920, 1080, 1920 * 3, PixelFormat.Format24bppRgb, _pImage);
+            stride = width * pixelSize;
+            bufferSize = stride * height;
+
+            _pImage = Marshal.AllocHGlobal(bufferSize);
+            _image = new Bitmap(width, height, stride, PixelFormat.Format24bppRgb, _pImage);
 
             var ffmpeg = new FFMpegConverter();
             outputStream = new MemoryStream();
@@ -87,6 +97,16 @@ namespace FaceDemo
             task = ffmpeg.ConvertLiveMedia("rtsp://user:password@192.168.1.64:554/h264/ch1/main/av_stream", null,
                 outputStream, Format.raw_video, setting);
 
+            /*
+             * USB摄像头捕获
+             * 通过ffmpeg可以捕获USB摄像，如下代码所示。
+             * 首先通过：ffmpeg -list_devices true -f dshow -i dummy命令，可以列出系统中存在的USB摄像设备（或通过控制面板的设备管理工具查看设备名称），例如在我电脑中叫USB2.0 PC CAMERA。
+             * 然后根据捕获的分辨率，修改视频图形信息，包括width和height，一般像素大小不用修改，如果要参考设备支持的分辨率，可以使用：
+             * ffmpeg -list_options true -f dshow -i video="USB2.0 PC CAMERA"命令
+             */
+            //task = ffmpeg.ConvertLiveMedia("video=USB2.0 PC CAMERA", "dshow",
+            //    outputStream, Format.raw_video, setting);
+
             task.OutputDataReceived += DataReceived;
             task.Start();
 
@@ -96,7 +116,7 @@ namespace FaceDemo
 
         private void DataReceived(object sender, EventArgs e)
         {
-            if (outputStream.Position == 6220800) //1920*1080*3,stride * width,取决于图片的大小和像素格式
+            if (outputStream.Position == bufferSize) //1920*1080*3,stride * width,取决于图片的大小和像素格式
                 lock (_imageLock)
                 {
                     var data = outputStream.ToArray();
@@ -118,10 +138,11 @@ namespace FaceDemo
 
                 lock (_imageLock)
                 {
-                    image = (Bitmap) _image.Clone();
+                    image = (Bitmap)_image.Clone();
                 }
 
-                if (_shouldShot){
+                if (_shouldShot)
+                {
                     WriteFeature(image);
                     _shouldShot = false;
                 }
@@ -279,7 +300,7 @@ namespace FaceDemo
                 return;
             }
 
-            var openFile = new OpenFileDialog {Multiselect = false};
+            var openFile = new OpenFileDialog { Multiselect = false };
             var result = openFile.ShowDialog();
             if (result == DialogResult.OK)
             {
