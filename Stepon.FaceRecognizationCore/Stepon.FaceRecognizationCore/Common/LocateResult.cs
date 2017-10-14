@@ -8,8 +8,19 @@ namespace Stepon.FaceRecognizationCore.Common
     /// </summary>
     public class LocateResult : IDisposable
     {
+        /// <summary>
+        ///     人脸数量
+        /// </summary>
         public int FaceCount;
+
+        /// <summary>
+        ///     人脸位置信息
+        /// </summary>
         public FaceRect[] Faces;
+
+        /// <summary>
+        ///     人脸的角度信息
+        /// </summary>
         public OrientCode[] FacesOrient;
 
         /// <summary>
@@ -22,6 +33,9 @@ namespace Stepon.FaceRecognizationCore.Common
         /// </summary>
         public ImageData OffInput;
 
+        /// <summary>
+        ///     结果中是否包含人脸
+        /// </summary>
         public bool HasFace => FaceCount > 0;
 
         public void Dispose()

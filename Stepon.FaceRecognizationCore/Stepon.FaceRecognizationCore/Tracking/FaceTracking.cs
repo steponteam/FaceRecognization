@@ -51,8 +51,8 @@ namespace Stepon.FaceRecognizationCore.Tracking
 
             IsIntialized = true;
 
-            return (ErrorCode) TrackingWrapper.AFT_FSDK_InitialFaceEngine(AppId, SdkKey, Buffer, PreAllocMemSize,
-                out Engine, (int) orientPriority, scale, maxFaceNumber);
+            return (ErrorCode)TrackingWrapper.AFT_FSDK_InitialFaceEngine(AppId, SdkKey, Buffer, PreAllocMemSize,
+                out Engine, (int)orientPriority, scale, maxFaceNumber);
         }
 
         /// <summary>
@@ -70,7 +70,17 @@ namespace Stepon.FaceRecognizationCore.Tracking
             return ret;
         }
 
-        public override ErrorCode Detect(byte[] imageData, int width, int height, out LocateResult result)
+        /// <summary>
+        ///     进行检测
+        /// </summary>
+        /// <param name="imageData">图像数据</param>
+        /// <param name="width">图像宽度</param>
+        /// <param name="height">图像高度</param>
+        /// <param name="result">识别结果</param>
+        /// <param name="pixelSize">像素大小</param>
+        /// <returns>成功返回 MOK，否则返回失败 code</returns>
+        public override ErrorCode Detect(byte[] imageData, int width, int height, out LocateResult result,
+            int pixelSize = 3)
         {
             var ret = ErrorCode.Ok;
             result = CommonOperation.OffInputOperation(imageData, width, height,
@@ -83,14 +93,14 @@ namespace Stepon.FaceRecognizationCore.Tracking
         {
             var retCode =
                 TrackingWrapper.AFT_FSDK_FaceFeatureDetect(Engine, ref offInput, out var pDetectResult);
-            ret = (ErrorCode) retCode;
+            ret = (ErrorCode)retCode;
             if (ret == ErrorCode.Ok)
             {
                 var nativeResult = pDetectResult.ToStruct<AFT_FSDK_FACERES>();
                 var resolveResult = new LocateResult
                 {
                     FaceCount = nativeResult.nFace,
-                    FacesOrient = Enumerable.Repeat((OrientCode) nativeResult.lfaceOrient, nativeResult.nFace)
+                    FacesOrient = Enumerable.Repeat((OrientCode)nativeResult.lfaceOrient, nativeResult.nFace)
                         .ToArray()
                 };
 
@@ -131,7 +141,7 @@ namespace Stepon.FaceRecognizationCore.Tracking
         /// </summary>
         public override void Dispose()
         {
-            var retCode = (ErrorCode) TrackingWrapper.AFT_FSDK_UninitialFaceEngine(Engine);
+            var retCode = (ErrorCode)TrackingWrapper.AFT_FSDK_UninitialFaceEngine(Engine);
             if (retCode != ErrorCode.Ok)
                 throw new FaceException(retCode);
         }

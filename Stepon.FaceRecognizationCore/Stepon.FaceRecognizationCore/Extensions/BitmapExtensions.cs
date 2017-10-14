@@ -38,8 +38,9 @@ namespace Stepon.FaceRecognizationCore.Extensions
         /// </summary>
         /// <param name="self"></param>
         /// <param name="useNativePixelFormat"></param>
+        /// <param name="pixelSize"></param>
         /// <returns></returns>
-        public static byte[] GetBitmapData(this Bitmap self, bool useNativePixelFormat = false)
+        public static byte[] GetBitmapData(this Bitmap self, out int pixelSize, bool useNativePixelFormat = false)
         {
             var rect = new Rectangle(0, 0, self.Width, self.Height);
             var bmpData = self.LockBits(rect, ImageLockMode.ReadOnly,
@@ -51,6 +52,8 @@ namespace Stepon.FaceRecognizationCore.Extensions
             Marshal.Copy(dataPtr, data, 0, bytesCount);
 
             self.UnlockBits(bmpData);
+
+            pixelSize = bmpData.Stride / bmpData.Width;
 
             return data;
         }

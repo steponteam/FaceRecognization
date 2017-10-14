@@ -14,6 +14,9 @@ namespace Stepon.FaceRecognization.Interfaces
         protected readonly string SdkKey;
         protected IntPtr Engine;
 
+        /// <summary>
+        ///     是否进行了初始化
+        /// </summary>
         public bool IsIntialized = false;
 
         protected FaceBase(string appId, string sdkKey, int preAllocMemSize = 41943040)

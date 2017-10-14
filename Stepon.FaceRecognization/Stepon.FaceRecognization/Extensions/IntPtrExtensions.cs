@@ -11,6 +11,13 @@ namespace Stepon.FaceRecognization.Extensions
 {
     internal static class IntPtrExtensions
     {
+        /// <summary>
+        ///     将指针转换为结构体数组
+        /// </summary>
+        /// <typeparam name="T">结构体类型</typeparam>
+        /// <param name="self">指针</param>
+        /// <param name="length">数组长度</param>
+        /// <returns>结构体数组</returns>
         public static T[] ToStructArray<T>(this IntPtr self, int length)
         {
             var size = Marshal.SizeOf<T>();
@@ -24,6 +31,12 @@ namespace Stepon.FaceRecognization.Extensions
             return array;
         }
 
+        /// <summary>
+        ///     将指针转换为结构体
+        /// </summary>
+        /// <typeparam name="T">结构体类型</typeparam>
+        /// <param name="self">指针</param>
+        /// <returns>结构体实例</returns>
         public static T ToStruct<T>(this IntPtr self)
         {
             try

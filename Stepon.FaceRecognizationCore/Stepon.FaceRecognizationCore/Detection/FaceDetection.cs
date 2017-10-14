@@ -55,8 +55,8 @@ namespace Stepon.FaceRecognizationCore.Detection
 
             IsIntialized = true;
 
-            return (ErrorCode) DetectionWrapper.AFD_FSDK_InitialFaceEngine(AppId, SdkKey, Buffer, PreAllocMemSize,
-                out Engine, (int) orientPriority, scale, maxFaceNumber);
+            return (ErrorCode)DetectionWrapper.AFD_FSDK_InitialFaceEngine(AppId, SdkKey, Buffer, PreAllocMemSize,
+                out Engine, (int)orientPriority, scale, maxFaceNumber);
         }
 
         /// <summary>
@@ -81,12 +81,14 @@ namespace Stepon.FaceRecognizationCore.Detection
         /// <param name="width">图像宽度</param>
         /// <param name="height">图像高度</param>
         /// <param name="result">识别结果</param>
+        /// <param name="pixelSize">像素大小</param>
         /// <returns>成功返回 MOK，否则返回失败 code</returns>
-        public override ErrorCode Detect(byte[] imageData, int width, int height, out LocateResult result)
+        public override ErrorCode Detect(byte[] imageData, int width, int height, out LocateResult result,
+            int pixelSize = 3)
         {
             var ret = ErrorCode.Ok;
             result = CommonOperation.OffInputOperation(imageData, width, height,
-                (offInput, pImageData) => Detect(offInput, pImageData, out ret));
+                (offInput, pImageData) => Detect(offInput, pImageData, out ret), pixelSize);
 
             return ret;
         }
@@ -95,14 +97,14 @@ namespace Stepon.FaceRecognizationCore.Detection
         {
             var retCode =
                 DetectionWrapper.AFD_FSDK_StillImageFaceDetection(Engine, ref offInput, out var pDetectResult);
-            ret = (ErrorCode) retCode;
+            ret = (ErrorCode)retCode;
             if (ret == ErrorCode.Ok)
             {
                 var nativeResult = pDetectResult.ToStruct<AFD_FSDK_FACERES>();
-                var resolveResult = new LocateResult {FaceCount = nativeResult.nFace};
+                var resolveResult = new LocateResult { FaceCount = nativeResult.nFace };
                 var facesOrient = nativeResult.lfaceOrient.ToStructArray<int>(resolveResult.FaceCount);
 
-                resolveResult.FacesOrient = facesOrient.Select(e => (OrientCode) e).ToArray();
+                resolveResult.FacesOrient = facesOrient.Select(e => (OrientCode)e).ToArray();
                 resolveResult.Faces = nativeResult.rcFace.ToStructArray<FaceRect>(resolveResult.FaceCount);
                 resolveResult.OffInput = offInput;
                 resolveResult.ImageDataPtr = pImageData;
@@ -140,7 +142,7 @@ namespace Stepon.FaceRecognizationCore.Detection
         /// </summary>
         public override void Dispose()
         {
-            var retCode = (ErrorCode) DetectionWrapper.AFD_FSDK_UninitialFaceEngine(Engine);
+            var retCode = (ErrorCode)DetectionWrapper.AFD_FSDK_UninitialFaceEngine(Engine);
             if (retCode != ErrorCode.Ok)
                 throw new FaceException(retCode);
         }

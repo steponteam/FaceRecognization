@@ -14,13 +14,22 @@ using Stepon.FaceRecognizationCore.Recognization.Wrapper;
 
 namespace Stepon.FaceRecognizationCore.Recognization
 {
+    /// <summary>
+    ///     人脸识别
+    /// </summary>
     public class FaceRecognize : FaceBase
     {
+        /// <summary>
+        ///     初始化人脸识别
+        /// </summary>
+        /// <param name="appId">应用ID</param>
+        /// <param name="sdkKey">应用Key</param>
+        /// <param name="preAllocMemSize">缓存区内存大小（byte）</param>
         public FaceRecognize(string appId, string sdkKey, int preAllocMemSize = 41943040) : base(appId, sdkKey,
             preAllocMemSize)
         {
             var retCode =
-                (ErrorCode) RecognizeWrapper.AFR_FSDK_InitialEngine(appId, sdkKey, Buffer, PreAllocMemSize, out Engine);
+                (ErrorCode)RecognizeWrapper.AFR_FSDK_InitialEngine(appId, sdkKey, Buffer, PreAllocMemSize, out Engine);
 
             if (retCode != ErrorCode.Ok)
                 throw new FaceException(retCode);
@@ -41,11 +50,11 @@ namespace Stepon.FaceRecognizationCore.Recognization
             var faceRes = new AFR_FSDK_FACEINPUT
             {
                 rcFace = faceLocation,
-                lOrient = (int) orient
+                lOrient = (int)orient
             };
 
             var result =
-                (ErrorCode) RecognizeWrapper.AFR_FSDK_ExtractFRFeature(Engine, ref image, ref faceRes,
+                (ErrorCode)RecognizeWrapper.AFR_FSDK_ExtractFRFeature(Engine, ref image, ref faceRes,
                     out var faceModel);
 
             if (result == ErrorCode.Ok)
@@ -120,7 +129,7 @@ namespace Stepon.FaceRecognizationCore.Recognization
                 float result = 0;
 
                 var retCode =
-                    (ErrorCode) RecognizeWrapper.AFR_FSDK_FacePairMatching(Engine, ref originModel, ref matchModel,
+                    (ErrorCode)RecognizeWrapper.AFR_FSDK_FacePairMatching(Engine, ref originModel, ref matchModel,
                         ref result);
 
                 if (retCode != ErrorCode.Ok)
@@ -165,7 +174,7 @@ namespace Stepon.FaceRecognizationCore.Recognization
         /// </summary>
         public override void Dispose()
         {
-            var retCode = (ErrorCode) RecognizeWrapper.AFR_FSDK_UninitialEngine(Engine);
+            var retCode = (ErrorCode)RecognizeWrapper.AFR_FSDK_UninitialEngine(Engine);
             if (retCode != ErrorCode.Ok)
                 throw new FaceException(retCode);
         }

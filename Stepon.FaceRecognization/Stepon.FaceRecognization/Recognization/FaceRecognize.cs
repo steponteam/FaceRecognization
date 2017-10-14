@@ -14,8 +14,17 @@ using Stepon.FaceRecognization.Recognization.Wrapper;
 
 namespace Stepon.FaceRecognization.Recognization
 {
+    /// <summary>
+    ///     人脸识别
+    /// </summary>
     public class FaceRecognize : FaceBase
     {
+        /// <summary>
+        ///     初始化人脸识别
+        /// </summary>
+        /// <param name="appId">应用ID</param>
+        /// <param name="sdkKey">应用Key</param>
+        /// <param name="preAllocMemSize">缓存区内存大小（byte）</param>
         public FaceRecognize(string appId, string sdkKey, int preAllocMemSize = 41943040) : base(appId, sdkKey,
             preAllocMemSize)
         {

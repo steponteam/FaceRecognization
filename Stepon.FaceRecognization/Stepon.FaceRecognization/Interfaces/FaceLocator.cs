@@ -20,7 +20,7 @@ namespace Stepon.FaceRecognization.Interfaces
 
         public abstract ErrorCode Detect(Bitmap image, out LocateResult result);
 
-        public abstract ErrorCode Detect(byte[] imageData, int width, int height, out LocateResult result);
+        public abstract ErrorCode Detect(byte[] imageData, int width, int height, out LocateResult result, int pixelSize = 3);
 
         public abstract SdkVersion GetVersion();
     }

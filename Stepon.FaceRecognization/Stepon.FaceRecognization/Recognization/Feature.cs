@@ -21,7 +21,7 @@ namespace Stepon.FaceRecognization.Recognization
         public FaceRect Rect { get; set; }
 
         /// <summary>
-        ///     位置的另外的表达方式
+        ///     位置的另外的表达方式，一般用作GDI+的绘制
         /// </summary>
         public Rectangle FaceLoaction => Rect.ToRectangle();
 

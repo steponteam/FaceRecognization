@@ -5,6 +5,9 @@ using Stepon.FaceRecognizationCore.Tracking;
 
 namespace Stepon.FaceRecognizationCore.Common
 {
+    /// <summary>
+    /// 人脸定位工厂类
+    /// </summary>
     public class LocatorFactory
     {
         /// <summary>
