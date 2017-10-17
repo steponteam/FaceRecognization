@@ -2,6 +2,9 @@
  * author：Gavin
  * created：2017-8-9
  * copyright：Copyright © 2016-2017 Stepon Technology CO.,LTD
+ * fix：
+ * 2017-10-17：
+ * 1.修复填充字节对齐的问题
  *********************************************************/
 
 using System;
@@ -85,7 +88,7 @@ namespace Stepon.FaceRecognizationCore.Common
                 pi32Pitch = new int[4],
                 ppu8Plane = new IntPtr[4]
             };
-            offInput.pi32Pitch[0] = width * pixelSize; //正常情况下，应该获取图形Stride长度
+            offInput.pi32Pitch[0] = (int)((width * pixelSize + pixelSize) & 0xfffffffc); //正常情况下，应该获取图形Stride长度
 
             //由于ASVLOFFSCREEN还要用于人脸识别，所以不释放该资源，当识别完成后释放，或未检测到人脸时释放
             var pImageData = Marshal.AllocHGlobal(imageData.Length); //未释放
