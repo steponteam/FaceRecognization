@@ -2,7 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>x64;AnyCPU</Platforms>
+    <Description>C# wrapper of arcsoft's face recognize</Description>
+    <Company>Stepon Technology</Company>
+    <Copyright>Copyright © 2016-2017 Stepon Technology CO.,LTD</Copyright>
+    <Authors>Gavin</Authors>
+    <PackageLicenseUrl>https://github.com/steponteam/FaceRecognization/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/steponteam/FaceRecognization</PackageProjectUrl>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/32318672?s=200</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>

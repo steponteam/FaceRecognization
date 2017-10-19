@@ -8,7 +8,7 @@
     <owners>$author$</owners>
     <licenseUrl>https://github.com/steponteam/FaceRecognization/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/steponteam/FaceRecognization</projectUrl>
-    <iconUrl>http://www.stepontech.com</iconUrl>
+    <iconUrl>https://avatars2.githubusercontent.com/u/32318672?s=200</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>C# wrapper of arcsoft's face recognize</releaseNotes>

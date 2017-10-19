@@ -4,6 +4,17 @@ This project is a C# wrapper of arcsoft's library.
 Stepon.FaceRecognizationCore is for .net core 2.0. It uses [CoreCompat/System.Drawing](https://github.com/CoreCompat/System.Drawing), you should install libgdiplus.
 
 ## How to use
+
+### Nuget Package
+For .net framework 4.5.1:
+```powershell
+Install-Package Stepon.FaceRecognization
+```
+For .net standard 2.0:
+```powershell
+Install-Package Stepon.FaceRecognizationCore
+```
+
 Get app id and sdk key from [arcsoft's website](http://www.arcsoft.com.cn/ai/arcface.html) (it's free). Remember to update the libraries if arcsoft has newer version. The appid and key is associated with sdk.
 
 There are three main classes to use for recognization:
