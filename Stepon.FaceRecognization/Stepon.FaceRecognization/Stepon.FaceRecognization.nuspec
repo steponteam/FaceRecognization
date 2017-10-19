@@ -6,8 +6,8 @@
     <title>$title$</title>
     <authors>Gavin</authors>
     <owners>$author$</owners>
-    <licenseUrl>http://www.stepontech.com</licenseUrl>
-    <projectUrl>http://www.stepontech.com</projectUrl>
+    <licenseUrl>https://github.com/steponteam/FaceRecognization/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/steponteam/FaceRecognization</projectUrl>
     <iconUrl>http://www.stepontech.com</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
