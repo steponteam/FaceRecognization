@@ -63,10 +63,11 @@ namespace Stepon.FaceRecognizationCore
         ///     定位并抽取特征数据
         /// </summary>
         /// <param name="image">待处理的图像</param>
+        /// <param name="operation">抽取操作</param>
         /// <returns>特征数据数组</returns>
-        public Feature[] LocateExtract(Bitmap image)
+        public Feature[] LocateExtract(Bitmap image, LocateOperation operation = LocateOperation.None)
         {
-            var code = _locator.Detect(image, out var location);
+            var code = _locator.Detect(image, out var location, operation);
             if (code != ErrorCode.Ok)
                 throw new FaceException(code);
 
@@ -88,10 +89,12 @@ namespace Stepon.FaceRecognizationCore
         /// <param name="imageData">待处理的图像数据</param>
         /// <param name="width">图像宽度</param>
         /// <param name="height">图像高度</param>
+        /// <param name="pixelSize">像素大小</param>
+        /// <param name="operation">抽取操作</param>
         /// <returns>特征数据数组</returns>
-        public Feature[] LocateExtract(byte[] imageData, int width, int height)
+        public Feature[] LocateExtract(byte[] imageData, int width, int height, int pixelSize = 3, LocateOperation operation = LocateOperation.None)
         {
-            var code = _locator.Detect(imageData, width, height, out var location);
+            var code = _locator.Detect(imageData, width, height, out var location, pixelSize, operation);
             if (code != ErrorCode.Ok)
                 throw new FaceException(code);
 

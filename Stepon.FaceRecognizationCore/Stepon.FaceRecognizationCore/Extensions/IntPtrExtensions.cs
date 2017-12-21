@@ -49,5 +49,24 @@ namespace Stepon.FaceRecognizationCore.Extensions
                 Marshal.DestroyStructure<T>(self);
             }
         }
+
+        /// <summary>
+        /// 将结构体数组转换为指针，指针需要释放
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        /// <returns>结构体的非托管指针</returns>
+        public static IntPtr StructArrayToPtr<T>(T[] array)
+        {
+            var size = Marshal.SizeOf<T>();
+            var swap = Marshal.AllocHGlobal(size * array.Length);
+            var result = new IntPtr(swap.ToInt64());
+            foreach (T single in array)
+            {
+                Marshal.StructureToPtr(single, swap, false);
+                swap += size;
+            }
+            return result;
+        }
     }
 }

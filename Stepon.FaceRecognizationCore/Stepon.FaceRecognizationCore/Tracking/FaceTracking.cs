@@ -31,6 +31,22 @@ namespace Stepon.FaceRecognizationCore.Tracking
         }
 
         /// <summary>
+        /// 初始化人脸检测
+        /// </summary>
+        /// <param name="appId">应用ID</param>
+        /// <param name="sdkKey">应用Key</param>
+        /// <param name="age">年龄识别模块</param>
+        /// <param name="gender">性别识别模块</param>
+        /// <param name="autoInitWithDefaultParameter">如果设置为True，将自动采用默认参数初始化引擎</param>
+        /// <param name="preAllocMemSize">缓存区内存大小（byte）</param>
+        public FaceTracking(string appId, string sdkKey, FaceExtra age, FaceExtra gender,
+            bool autoInitWithDefaultParameter = true,
+            int preAllocMemSize = 41943040) : base(appId, sdkKey, age, gender, autoInitWithDefaultParameter,
+            preAllocMemSize)
+        {
+        }
+
+        /// <summary>
         ///     初始化引擎
         /// </summary>
         /// <param name="orientPriority">期望的脸部检测角度范围</param>
@@ -61,11 +77,11 @@ namespace Stepon.FaceRecognizationCore.Tracking
         /// <param name="image">待检测的图像数据</param>
         /// <param name="result">检测结果</param>
         /// <returns>成功返回 MOK，否则返回失败 code</returns>
-        public override ErrorCode Detect(Bitmap image, out LocateResult result)
+        public override ErrorCode Detect(Bitmap image, out LocateResult result, LocateOperation operation = LocateOperation.None)
         {
             var ret = ErrorCode.Ok;
             result = CommonOperation.OffInputOperation(image,
-                (offInput, pImageData) => Detect(offInput, pImageData, out ret));
+                (offInput, pImageData) => Detect(offInput, pImageData, out ret, operation));
 
             return ret;
         }
@@ -80,16 +96,16 @@ namespace Stepon.FaceRecognizationCore.Tracking
         /// <param name="pixelSize">像素大小</param>
         /// <returns>成功返回 MOK，否则返回失败 code</returns>
         public override ErrorCode Detect(byte[] imageData, int width, int height, out LocateResult result,
-            int pixelSize = 3)
+            int pixelSize = 3, LocateOperation operation = LocateOperation.None)
         {
             var ret = ErrorCode.Ok;
             result = CommonOperation.OffInputOperation(imageData, width, height,
-                (offInput, pImageData) => Detect(offInput, pImageData, out ret));
+                (offInput, pImageData) => Detect(offInput, pImageData, out ret, operation));
 
             return ret;
         }
 
-        private LocateResult Detect(ImageData offInput, IntPtr pImageData, out ErrorCode ret)
+        private LocateResult Detect(ImageData offInput, IntPtr pImageData, out ErrorCode ret, LocateOperation operation = LocateOperation.None)
         {
             var retCode =
                 TrackingWrapper.AFT_FSDK_FaceFeatureDetect(Engine, ref offInput, out var pDetectResult);
@@ -107,6 +123,26 @@ namespace Stepon.FaceRecognizationCore.Tracking
                 resolveResult.Faces = nativeResult.rcFace.ToStructArray<FaceRect>(resolveResult.FaceCount);
                 resolveResult.OffInput = offInput;
                 resolveResult.ImageDataPtr = pImageData;
+
+                if (operation.HasFlag(LocateOperation.IncludeAge))
+                {
+                    //检测年龄
+                    if (ageEstimate == null)
+                    {
+                        throw new InvalidOperationException("请采用年龄识别模块初始化检测器");
+                    }
+                    resolveResult = ageEstimate.StaticEstimation(resolveResult, false);
+                }
+
+                if (operation.HasFlag(LocateOperation.IncludeGender))
+                {
+                    //性别
+                    if (genderEstimate == null)
+                    {
+                        throw new InvalidOperationException("请采用性别识别模块初始化检测器");
+                    }
+                    resolveResult = genderEstimate.StaticEstimation(resolveResult, false);
+                }
 
                 return resolveResult;
             }

@@ -2,8 +2,10 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using Stepon.FaceRecognization;
+using Stepon.FaceRecognization.Age;
 using Stepon.FaceRecognization.Common;
 using Stepon.FaceRecognization.Extensions;
+using Stepon.FaceRecognization.Gender;
 
 namespace Tests
 {
@@ -14,6 +16,49 @@ namespace Tests
             TestMatching();
             Console.WriteLine("process complete");
             Console.ReadKey();
+        }
+
+        private static void TestAgeAndGender()
+        {
+            using (var detection = LocatorFactory.GetDetectionLocator("appid", "key"))
+            {
+                var image1 = Image.FromFile("test2.jpg");
+                using (var estimate = new FaceAge("appid", "key"))
+                {
+                    var result1 = estimate.StaticEstimation(detection, new Bitmap(image1));
+                    foreach (var result1Age in result1.Ages)
+                    {
+                        Console.WriteLine(result1Age);
+                    }
+                }
+
+                using (var estimate = new FaceGender("appid", "key"))
+                {
+                    var result1 = estimate.StaticEstimation(detection, new Bitmap(image1));
+                    foreach (var result1Gender in result1.Genders)
+                    {
+                        Console.WriteLine(result1Gender);
+                    }
+                }
+            }
+
+            //another
+            var age = new FaceAge("appid", "key");
+            var gender = new FaceGender("appid", "key");
+            using (var detection = LocatorFactory.GetDetectionLocator("appid", "key", age, gender))
+            {
+                var image1 = Image.FromFile("test2.jpg");
+                var result = detection.Detect(new Bitmap(image1), out var location,
+                    LocateOperation.IncludeAge | LocateOperation.IncludeGender); //default is None, no age and gender estimation
+                for (var i = 0; i < location.FaceCount; i++)
+                {
+                    Console.WriteLine(location.Ages[i]);
+                    Console.WriteLine(location.Genders[i]);
+                }
+            }
+            age.Dispose();
+            gender.Dispose();
+
         }
 
         private static void TestMatching()

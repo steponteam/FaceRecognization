@@ -10,6 +10,7 @@
     <PackageLicenseUrl>https://github.com/steponteam/FaceRecognization/blob/master/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/steponteam/FaceRecognization</PackageProjectUrl>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/32318672?s=200</PackageIconUrl>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="libs\libarcsoft_fsdk_age_estimation.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="libs\libarcsoft_fsdk_face_detection.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -24,6 +28,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="libs\libarcsoft_fsdk_face_tracking.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\libarcsoft_fsdk_gender_estimation.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -9,6 +9,11 @@ namespace Stepon.FaceRecognization.Common
     public class LocateResult : IDisposable
     {
         /// <summary>
+        ///     年龄，如果未启动年龄检测，则为空
+        /// </summary>
+        public int[] Ages;
+
+        /// <summary>
         ///     人脸数量
         /// </summary>
         public int FaceCount;
@@ -22,6 +27,11 @@ namespace Stepon.FaceRecognization.Common
         ///     人脸的角度信息
         /// </summary>
         public OrientCode[] FacesOrient;
+
+        /// <summary>
+        ///     性别，如果未启动性别检测，则为空。1表示女，0表示男，-1表示未知。
+        /// </summary>
+        public int[] Genders;
 
         /// <summary>
         ///     指向图形数据的指针，保留用于释放

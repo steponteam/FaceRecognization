@@ -116,6 +116,48 @@ namespace Stepon.FaceRecognization.Common
         public string Copyright;
     }
 
+    #region age and gender data structure
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExtraFaceInput
+    {
+        public IntPtr pFaceRectArray;
+        public IntPtr pFaceOrientArray;
+        public int lFaceNumber;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExtraFaceResult
+    {
+        public IntPtr pResult;
+        public int lFaceNumber;
+    }
+
+    #endregion
+
+
+    /// <summary>
+    ///     人脸定位的操作定义
+    /// </summary>
+    [Flags]
+    public enum LocateOperation
+    {
+        /// <summary>
+        ///     一般操作
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        ///     包含年龄
+        /// </summary>
+        IncludeAge = 1,
+
+        /// <summary>
+        ///     包含性别
+        /// </summary>
+        IncludeGender = 2
+    }
+
     /// <summary>
     ///     错误代码
     /// </summary>

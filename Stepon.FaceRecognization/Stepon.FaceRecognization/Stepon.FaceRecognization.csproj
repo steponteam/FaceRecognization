@@ -78,6 +78,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Age\FaceAge.cs" />
+    <Compile Include="Age\Wrapper\AgeWrapper.cs" />
     <Compile Include="Common\CommonOperation.cs" />
     <Compile Include="Common\DataModel.cs" />
     <Compile Include="Common\LocatorFactory.cs" />
@@ -90,7 +92,10 @@
     <Compile Include="Extensions\IntPtrExtensions.cs" />
     <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="FaceProcessor.cs" />
+    <Compile Include="Gender\FaceGender.cs" />
+    <Compile Include="Gender\Wrapper\GenderWrapper.cs" />
     <Compile Include="Interfaces\FaceBase.cs" />
+    <Compile Include="Interfaces\FaceExtra.cs" />
     <Compile Include="Interfaces\FaceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recognization\FaceModel.cs" />
@@ -102,6 +107,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="libs\libarcsoft_fsdk_age_estimation.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="libs\libarcsoft_fsdk_face_detection.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -109,6 +117,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="libs\libarcsoft_fsdk_face_tracking.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\libarcsoft_fsdk_gender_estimation.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

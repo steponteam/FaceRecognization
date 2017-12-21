@@ -21,6 +21,16 @@ namespace Stepon.FaceRecognization.Recognization
         public FaceRect Rect { get; set; }
 
         /// <summary>
+        ///     特征对应人脸的年龄，如果进行了检测则存在
+        /// </summary>
+        public int Age { get; set; }
+
+        /// <summary>
+        ///     特征对应人脸的性别，如果进行了检测则存在,1表示女，0表示男，-1表示未知
+        /// </summary>
+        public int Gender { get; set; }
+
+        /// <summary>
         ///     位置的另外的表达方式，一般用作GDI+的绘制
         /// </summary>
         public Rectangle FaceLoaction => Rect.ToRectangle();

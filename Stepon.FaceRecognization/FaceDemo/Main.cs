@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NReco.VideoConverter;
 using Stepon.FaceRecognization;
+using Stepon.FaceRecognization.Age;
 using Stepon.FaceRecognization.Common;
 using Stepon.FaceRecognization.Detection;
+using Stepon.FaceRecognization.Gender;
 using Stepon.FaceRecognization.Recognization;
 using Stepon.FaceRecognization.Tracking;
 
@@ -24,6 +26,8 @@ namespace FaceDemo
         private const string FtKey = "";
         private const string FdKey = "";
         private const string FrKey = "";
+        private const string AgeKey = "";
+        private const string GenderKey = "";
 
         private const string FaceLibraryPath = "faces";
 
@@ -55,6 +59,11 @@ namespace FaceDemo
         private int stride;
         private int bufferSize;
 
+        //性别和年龄
+        private FaceAge _age;
+
+        private FaceGender _gender;
+
         public Main()
         {
             InitializeComponent();
@@ -63,7 +72,9 @@ namespace FaceDemo
 
         private void Init()
         {
-            _traking = LocatorFactory.GetTrackingLocator(AppId, FtKey) as FaceTracking;
+            _age = new FaceAge(AppId, AgeKey);
+            _gender = new FaceGender(AppId, GenderKey);
+            _traking = LocatorFactory.GetTrackingLocator(AppId, FtKey, _age, _gender) as FaceTracking;
             _detection = LocatorFactory.GetDetectionLocator(AppId, FdKey) as FaceDetection;
             _recognize = new FaceRecognize(AppId, FrKey);
             _processor = new FaceProcessor(_traking, _recognize);
@@ -159,6 +170,7 @@ namespace FaceDemo
         private void Verify(Bitmap bitmap)
         {
             var features = _processor.LocateExtract(bitmap);
+            //var features = _processor.LocateExtract(bitmap, LocateOperation.IncludeAge | LocateOperation.IncludeGender); //采用此方式抽取的特征，将包含性别和年龄信息
             if (features != null)
             {
                 var names = MatchAll(features);

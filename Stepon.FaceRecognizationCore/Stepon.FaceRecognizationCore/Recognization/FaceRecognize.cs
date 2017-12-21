@@ -29,7 +29,7 @@ namespace Stepon.FaceRecognizationCore.Recognization
             preAllocMemSize)
         {
             var retCode =
-                (ErrorCode)RecognizeWrapper.AFR_FSDK_InitialEngine(appId, sdkKey, Buffer, PreAllocMemSize, out Engine);
+                (ErrorCode)RecognizeWrapper.AFR_FSDK_InitialEngine(AppId, SdkKey, Buffer, PreAllocMemSize, out Engine);
 
             if (retCode != ErrorCode.Ok)
                 throw new FaceException(retCode);
@@ -38,7 +38,7 @@ namespace Stepon.FaceRecognizationCore.Recognization
         }
 
         /// <summary>
-        ///     抽取人脸特征
+        ///     抽取人脸特征，此函数不包含额外信息（性别和年龄）
         /// </summary>
         /// <param name="image">要抽取的人脸特征图像数据</param>
         /// <param name="faceLocation">人脸位置</param>
@@ -78,7 +78,7 @@ namespace Stepon.FaceRecognizationCore.Recognization
         }
 
         /// <summary>
-        ///     根据人脸识别结果返回特征数据数组
+        ///     根据人脸识别结果返回特征数据数组，如果位置信息中包含额外信息（性别和年龄），则会同时返回额外信息到特征中
         /// </summary>
         /// <param name="faces">人脸识别结果</param>
         /// <param name="autoDispose">是否自动释放人脸识别结果</param>
@@ -96,7 +96,14 @@ namespace Stepon.FaceRecognizationCore.Recognization
 
                     var feature = ExtractFeature(faces.OffInput, faceLocation, orient);
                     if (feature != null)
+                    {
+                        if (faces.Ages != null)
+                            feature.Age = faces.Ages[faceIndex];
+                        if (faces.Genders != null)
+                            feature.Gender = faces.Genders[faceIndex];
                         features.Add(feature);
+                    }
+
                 }
 
                 if (autoDispose)
