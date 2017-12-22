@@ -279,7 +279,11 @@ namespace FaceDemo
                             }
                         }
 
-                        userIdentity.Text = "";
+                        if (userIdentity.InvokeRequired)
+                            userIdentity.Invoke(new Action(() => { userIdentity.Text = ""; }));
+                        else
+                            userIdentity.Text = "";
+
                     }
                 }
                 else
