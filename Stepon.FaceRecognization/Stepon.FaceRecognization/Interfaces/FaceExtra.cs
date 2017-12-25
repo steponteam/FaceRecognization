@@ -65,7 +65,7 @@ namespace Stepon.FaceRecognization.Interfaces
         internal LocateResult Estimation(LocateResult locate, Action<ExtraFaceInput> estimation, bool autoDispose = true)
         {
             if (!locate.HasFace)
-                return null;
+                return locate;
 
             var faceInput = new ExtraFaceInput
             {

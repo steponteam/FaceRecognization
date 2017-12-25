@@ -237,6 +237,8 @@ namespace FaceDemo
             _traking.Dispose();
             _detection.Dispose();
             _recognize.Dispose();
+            _age.Dispose();
+            _gender.Dispose();
 
             Marshal.FreeHGlobal(_pImage);
 
