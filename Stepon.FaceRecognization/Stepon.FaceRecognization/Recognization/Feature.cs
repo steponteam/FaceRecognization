@@ -33,7 +33,7 @@ namespace Stepon.FaceRecognization.Recognization
         /// <summary>
         ///     位置的另外的表达方式，一般用作GDI+的绘制
         /// </summary>
-        public Rectangle FaceLoaction => Rect.ToRectangle();
+        public Rectangle FaceLocation => Rect.ToRectangle();
 
         public void Dispose()
         {
