@@ -6,7 +6,7 @@ namespace Stepon.FaceRecognizationCore.Gender.Wrapper
 {
     internal class GenderWrapper
     {
-        private const string DllPosition = "libs/libarcsoft_fsdk_gender_estimation.so";
+        private const string DllPosition = "libs/libarcsoft_fsdk_gender_estimation.dll";
 
         [DllImport(DllPosition, EntryPoint = "ASGE_FSDK_InitGenderEngine",
             CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]

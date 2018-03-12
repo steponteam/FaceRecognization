@@ -12,7 +12,7 @@ namespace Stepon.FaceRecognizationCore.Age.Wrapper
 {
     internal class AgeWrapper
     {
-        private const string DllPosition = "libs/libarcsoft_fsdk_age_estimation.so";
+        private const string DllPosition = "libs/libarcsoft_fsdk_age_estimation.dll";
 
         [DllImport(DllPosition, EntryPoint = "ASAE_FSDK_InitAgeEngine",
             CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]

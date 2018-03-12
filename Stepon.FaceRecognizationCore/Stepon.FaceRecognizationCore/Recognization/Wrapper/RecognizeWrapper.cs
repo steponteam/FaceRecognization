@@ -6,7 +6,7 @@ namespace Stepon.FaceRecognizationCore.Recognization.Wrapper
 {
     internal class RecognizeWrapper
     {
-        private const string DllPosition = "libs/libarcsoft_fsdk_face_recognition.so";
+        private const string DllPosition = "libs/libarcsoft_fsdk_face_recognition.dll";
 
         [DllImport(DllPosition, EntryPoint = "AFR_FSDK_InitialEngine",
             CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]

@@ -6,7 +6,7 @@ namespace Stepon.FaceRecognizationCore.Tracking.Wrapper
 {
     internal class TrackingWrapper
     {
-        private const string DllPosition = "libs/libarcsoft_fsdk_face_tracking.so";
+        private const string DllPosition = "libs/libarcsoft_fsdk_face_tracking.dll";
 
         [DllImport(DllPosition, EntryPoint = "AFT_FSDK_InitialFaceEngine",
             CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
