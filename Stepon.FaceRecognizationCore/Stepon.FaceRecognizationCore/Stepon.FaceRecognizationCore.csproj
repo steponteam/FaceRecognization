@@ -11,7 +11,15 @@
     <PackageProjectUrl>https://github.com/steponteam/FaceRecognization</PackageProjectUrl>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/32318672?s=200</PackageIconUrl>
     <Version>1.1.1</Version>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
